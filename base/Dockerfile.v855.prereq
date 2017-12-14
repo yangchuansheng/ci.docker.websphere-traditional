@@ -69,21 +69,21 @@ RUN wget -q $URL/8.5.5-WS-WAS-FP0000010-part1.zip -O /tmp/wasfp1.zip \
       -preferences com.ibm.cic.common.core.preferences.preserveDownloadedArtifacts=false \
     && rm -fr /tmp/wasfp /tmp/wasfp1.zip /tmp/wasfp2.zip
 
-########################### Install Java SDK 8.0 ########################
+########################### Install Java SDK 7.1 ########################
 
-# Install Java SDK 8.0
-RUN wget -q $URL/8.0.2.10-WS-IBMWASJAVA-Linux.zip -O /tmp/java.zip \
+# Install Java SDK 7.1
+RUN wget -q $URL/7.1.4.5-WS-IBMWASJAVA-Linux.zip -O /tmp/java.zip \
     && mkdir /tmp/java \
     && unzip -qd /tmp/java /tmp/java.zip  \
     && /opt/IBM/InstallationManager/eclipse/tools/imcl -showProgress \
-      -acceptLicense install com.ibm.websphere.IBMJAVA.v80 \
+      -acceptLicense install com.ibm.websphere.IBMJAVA.v71 \
       -repositories /tmp/java/repository.config \
       -installationDirectory /opt/IBM/WebSphere/AppServer \
       -preferences com.ibm.cic.common.core.preferences.preserveDownloadedArtifacts=false \
     && rm -fr /tmp/java /tmp/java.zip
 
 ENV PATH /opt/IBM/WebSphere/AppServer/bin:$PATH
-RUN managesdk.sh -setCommandDefault -sdkname 1.8_64 \
-    && managesdk.sh -setNewProfileDefault -sdkname 1.8_64
+RUN managesdk.sh -setCommandDefault -sdkname 1.7_64 \
+    && managesdk.sh -setNewProfileDefault -sdkname 1.7_64
 
 CMD ["tar","cvf","/tmp/was.tar","/opt/IBM/WebSphere/AppServer"]
